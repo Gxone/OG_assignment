@@ -2,9 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>설문조사 결과</title>
 </head>
 <body>
+<!-- 어드민 템플릿 확장 -->
 {% extends "admin/base_site.html" %}
+
+<!-- nav -->
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">설문조사 결과</a></h1>
+{% endblock %}
+
+<!-- content -->
+{% block content %}
+{{test}}
+{% endblock content%}
+
 </body>
 </html>
