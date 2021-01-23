@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block title %}survey admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+{% endblock %}
+{% block sidebar %}
+    {{block.super}}
+    <div>
+        <h1>Extra links</h1>
+        <a href="/admin/extra/">My extra link</a>
+    </div>
+{% endblock %}
+{% block nav-global %}{% endblock %}
