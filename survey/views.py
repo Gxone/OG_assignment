@@ -5,7 +5,6 @@ from django.views import View
 from django.conf.urls import url
 from django.contrib import admin
 
-from .forms import UserForm
 from .models import Survey, Question, SurveyAnswer, User
 
 class SurveyView(View):
@@ -15,6 +14,7 @@ class SurveyView(View):
             'survey_title'   : survey.title,
             'survey_type'    : survey.type.name,
             'question_title' : [s.question for s in survey.question_set.filter(survey = survey.id)]
+
         } for survey in surveys]
 
         body = {'survey_list' : survey_list}
