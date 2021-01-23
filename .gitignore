@@ -343,4 +343,16 @@ zsdoc/data
 /tests/_output/*
 !/tests/_output/.gitkeep
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,vim,macos,linux,zsh
