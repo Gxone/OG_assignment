@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+{% if survey_list %}
+    <form method = "post" action = "">
+        {% csrf_token %}
+        <!-- 전화번호 입력 필드 -->
+        <label for = "tel" id = "number">전화번호: </label>
+        <input type = "tel" name = "user" id = "tel" pattern="[0-9]{11}" title = "숫자 11자를 입력해주세요." required = "required">
+
+        {% for survey in survey_list %}
+            <!-- 설문 문항 -->
+            <h1>{{survey.survey_title}}</h1>
+            <!-- 문항 타입이 select 일 경우 -->
+            {% if survey.survey_type == 'select' %}
+                <select name = "{{survey.survey_title}}">
+                    {% for question in survey.question_title %}
+                        <option value = "{{question}}">{{question}}</option>
+                    {% endfor %}
+                </select>
+            <!-- 문항 타입이 체크 박스, 라디오 버튼 일 경우 -->
+            {% else %}
+                {% for question in survey.question_title %}
+                    <input type ={{survey.survey_type}} name = "{{survey.survey_title}}" value = "{{question}}" id = "{{question}}">
+                    <label for = "{{question}}">{{question}}</label><br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        <input type = "submit" id = "submit" onsubmit="formSubmit">
+    </form>
+{% else %}
+    <p>설문 조사 문항이 없습니다.</p>
+{% endif %}
+</body>
+</html>
