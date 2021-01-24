@@ -1,11 +1,8 @@
 <!DOCTYPE html>
-<!-- static 파일 로드 -->
-{% load staticfiles %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>설문조사 결과</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 <!-- 어드민 템플릿 확장 -->
@@ -18,16 +15,26 @@
 
 <!-- content -->
 {% block content %}
-{{test}}
+{% for i in answer_result %}
+    {{i.survey_data.title}} <br>
+    {% for j in i.survey_data.answer_rate %}
+        {{j.answer}} -
+        {{j.rate}}<br>
+    {% endfor %}<br>
+{% endfor %}
+
+{% for i in user_answer_result %}
+    {{i.user_id}} - {{i.user_number}}<br>
+    -> {% for j in i.answer_data %}
+            {{j.title}}<br>
+                {% for x in j.answer_list %}
+                    {{x}}<br>
+                {% endfor %}
+        {% endfor %}
+<br>
+{% endfor %}
 {% endblock content%}
 
-<!-- {% block sidebar %} -->
-<!--    {{block.super}} -->
-<!--    <div> -->
-<!--        <h1>Extra links</h1> -->
-<!--        <a href="/admin/extra/">My extra link</a>-->
-<!--    </div> -->
-<!-- {% endblock %} -->
 
 </body>
 </html>
