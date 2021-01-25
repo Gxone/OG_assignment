@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>응답자 투표 결과</title>
+</head>
+<body>
+{% for i in user_answer_result %}
+    {{i.user_id}} - {{i.user_number}} ->
+    {% for j in i.answer_data %}
+        {{j.title}}<br>
+        {% for x in j.answer_list %}
+            {{x}}<br>
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+</body>
+</html>
