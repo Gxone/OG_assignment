@@ -14,21 +14,35 @@
 
 <!-- nav -->
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">설문조사 결과</a></h1>
+    <h1 id = "site-name">설문조사 결과</h1>
 {% endblock %}
 
 <!-- content -->
 {% block content %}
-<!-- 문항 별 응답 비율 -->
-{% for i in answer_result %}
-    {{i.survey_data.title}} <br>
-    {% for j in i.survey_data.answer_rate %}
-        {{j.answer}} -
-        {{j.rate}}<br>
-    {% endfor %}<br>
-{% endfor %}
+    <!-- 문항 별 응답 비율 -->
+    <div class = "container">
+        <!-- 응답자 별 답변 리스트 -->
+        <h2 class = "title" style = "display:inline-block; margin-right: 5px">문항 별 답변 비율</h2>
+        <a href = "excel/">
+            <button type = "button" class = "btn btn-secondary btn-sm" style = "padding:2px 5px 2px 5px; margin: 0px 0px 10px 10px">csv</button>
+        </a>
+        <hr><br>
 
-<br>
+        <!-- 응답 결과 리스트가 비어있는 경우 -->
+        {% if not answer_result %}
+            <h2>설문조사에 대한 응답 데이터가 존재하지 않습니다.</h2>
+        {% endif %}
+
+        <!-- 응답 결과 리스트가 존재하는 경우 -->
+        {% for i in answer_result %}
+            <h3 style = "color: #476D76;">{{i.survey_data.title}}</h3>
+            {% for j in i.survey_data.answer_rate %}
+                {{j.answer}} -
+                {{j.rate}}<br>
+            {% endfor %}<br>
+        {% endfor %}<br>
+    </div>
+
 {% endblock content%}
 </body>
 </html>
