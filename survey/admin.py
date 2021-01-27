@@ -1,27 +1,68 @@
-import pandas as pd
+import csv
 
 from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.db.models import Count
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import path
 
 from survey.models import Survey, Question, SurveyAnswer, User
 
-class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question', 'survey')
-    list_filter = ['survey']
-
 class containQuestion(admin.StackedInline):
     model = Question
     extra = 3
 
+@admin.register(Survey)
 class SurveyAdmin(admin.ModelAdmin):
+    # 목록에 보여질 필드
     list_display = ('title', 'type')
-    fieldsets = [('title', {'fields' : ['title']}), ('type', {'fields' : ['type']})]
-    # 외래키 관계
+    # 세부 양식에서 연관된 모델 정보를 그룹화
+    fieldsets = [('문항', {'fields' : ['title']}), ('타입', {'fields' : ['type']})]
+    # 문항에 해당하는 선택지들을 함께 수정하기 위해 작성 (외래키 관계)
     inlines = [containQuestion]
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    # 목록에 보여질 필드
+    list_display = ('question', 'survey')
+    # 세부 양식에서 연관된 모델 정보를 그룹화
+    fieldsets = [('선택지', {'fields': ['question']}), ('문항', {'fields': ['survey']})]
+    # 필터 옵션 추가할 필드
+    list_filter = ['survey']
+
+@admin.register(SurveyAnswer)
+class SurveyAnswerAdmin(admin.ModelAdmin):
+    # 목록에 보여질 필드
+    list_display = ('user', 'id')
+    # 필터 옵션 추가할 필드
+    list_filter = ['question__survey', 'user']
+
+    actions = ["export_as_csv"]
+
+    def export_as_csv(self, request, queryset):
+        """ csv 파일 다운로드
+
+        선택한 답변을 csv 파일로 다운로드 합니다.
+
+        returns:
+            200: csv 파일 다운로드
+        """
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        queryset = queryset.select_related('question__survey')
+        writer.writerow(['id', '전화번호', '문항', '선택지'])
+        for obj in queryset:
+            writer.writerow([obj.id, obj.user, obj.question.survey, obj.question])
+
+        return response
+
+    export_as_csv.short_description = "Export selected"
 
 class SurveyAnswersView(AdminSite):
     def get_urls(self):
@@ -32,21 +73,6 @@ class SurveyAnswersView(AdminSite):
         urls = custom_urls + urls
         return urls
 
-    def cal_rate(self, survey_title_list, questions, survey_answers):
-        # 문항 별 응답 비율
-        rate_list = dict()
-        for survey in survey_title_list:
-            for question in questions:
-                if survey.id == question.survey.id:
-                    # 문항에 대한 답변 별 개수
-                    count = survey_answers.filter(question=question.id).aggregate(Count('question'))['question__count']
-                    # 문항에 대한 모든 답변의 개수
-                    sum = survey_answers.filter(question__survey=survey.id).aggregate(Count('question'))[
-                        'question__count']
-                    # = 문항 별 답변 비율 계산
-                    rate_list[question.id] = round(count / sum * 100)
-        return rate_list
-
     def get_results_view(self, request):
         """ 문항 별 응답 비율 데이터 전달
 
@@ -56,6 +82,8 @@ class SurveyAnswersView(AdminSite):
             200: 문항, 선택지 비율 테이터
         """
         survey_answers = SurveyAnswer.objects.select_related('question__survey')
+
+        # 답변하지 않은 선택지도 표출하기 위해
         questions = Question.objects.all()
 
         # 설문 문항 리스트
@@ -86,39 +114,7 @@ class SurveyAnswersView(AdminSite):
         }
         return TemplateResponse(request, "admin/survey_results.html", body)
 
-class MakeExcelView(AdminSite):
-    def get_urls(self):
-        urls = super().get_urls()
-        custom_urls = [
-            path(r'results/excel/', self.admin_view(self.make_excel()))
-        ]
-        urls = custom_urls + urls
-        return urls
-
-    def make_excel(self):
-        """ 문항 별 선택지 응답 데이터 엑셀 파일 다운로드
-
-        문항 별 선택한 응답 비율을 엑셀 파일로 다운로드합니다.
-        """
-
-
-        # make excel file
-        writer = pd.ExcelWriter('../survey_result.xlsx')
-
-        results = SurveyAnswer.objects.select_related('question__survey')
-
-        survey_answers = SurveyAnswer.objects.select_related('question__survey')
-        questions = Question.objects.all()
-
-        # 설문 문항 리스트
-        surveys = [survey.question.survey for survey in survey_answers]
-
-        # 문항 순서 유지 중복 제거
-        survey_title_list = list()
-        for survey in surveys:
-            if survey not in survey_title_list:
-                survey_title_list.append(survey)
-
+    def cal_rate(self, survey_title_list, questions, survey_answers):
         # 문항 별 응답 비율
         rate_list = dict()
         for survey in survey_title_list:
@@ -131,14 +127,7 @@ class MakeExcelView(AdminSite):
                         'question__count']
                     # = 문항 별 답변 비율 계산
                     rate_list[question.id] = round(count / sum * 100)
-
-        df = pd.DataFrame({
-            "질문": result,
-            "답변": result,
-            "비율": result} for result in rate_list)
-
-        df.to_excel(writer, 'sheet1')
-        writer.save()
+        return rate_list
 
 class UsersView(AdminSite):
     def get_urls(self):
@@ -193,7 +182,6 @@ class UserAnswerView(AdminSite):
         try:
             survey_answers = SurveyAnswer.objects.filter(user = user_id).select_related('question__survey').select_related('user')
             surveys = [survey.question.survey for survey in survey_answers]
-            # user_queryset = get_object_or_404(User.objects.filter(id = user_id).prefetch_related('surveyanswer_set__question__survey'))
 
             # 문항 순서 유지 중복 제거
             survey_title_list = list()
@@ -218,11 +206,6 @@ class UserAnswerView(AdminSite):
         except IndexError:
             raise Http404('NO_DATA')
 
-
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(Survey, SurveyAdmin)
-
 admin_survey_results = SurveyAnswersView()
 admin_user_results = UsersView()
 admin_user_result = UserAnswerView()
-admin_make_excel = MakeExcelView()

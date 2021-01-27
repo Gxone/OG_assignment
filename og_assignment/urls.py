@@ -8,5 +8,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('admin/', admin_survey_results.urls),
     path('admin/', admin_user_results.urls),
-    path('admin/', admin_user_result.urls, name = 'user_result'),
+    path('admin/', admin_user_result.urls),
 ]
