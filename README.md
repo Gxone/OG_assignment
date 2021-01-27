@@ -11,11 +11,11 @@
 - [어드민]()
 > admin / qweasd123 으로 접속
 <br />
-- requirements 에 패키지 정보 저장 (pip install -r requirements.txt)
++ requirements 에 패키지 정보 저장 (pip install -r requirements.txt)
 <br />
-- 관리자 페이지 Survey-Surveys에서 문항 및 선택지 모두 생성, 추가, 삭제 가능
-- 관리자 페이지 Survey-Survey answers에서 Action을 통해 선택 응답 csv 파일로 다운로드
-- 관리자 페이지의 nav 에서 문항 별 설문조사 결과와 응답자 별 설문조사 결과페이지 링크
++ 관리자 페이지 Survey-Surveys에서 문항 및 선택지 모두 생성, 추가, 삭제 가능
++ 관리자 페이지 Survey-Survey answers에서 Action을 통해 선택 응답 csv 파일로 다운로드
++ 관리자 페이지의 nav 에서 문항 별 설문조사 결과와 응답자 별 설문조사 결과페이지 링크
 
 <br />
 
