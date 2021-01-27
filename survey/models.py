@@ -22,6 +22,7 @@ class SurveyType(models.Model):
 
 class User(models.Model):
     phone_number = models.CharField(max_length = 50)
+    question = models.ManyToManyField(Question, through = 'SurveyAnswer')
 
     def __str__(self):
         return self.phone_number
