@@ -60,6 +60,7 @@
 - [ ] nginx (배포 시 static 파일 적용)
 
 <br />
+
 ![image](https://user-images.githubusercontent.com/26542094/106123698-9d322100-619d-11eb-9c66-2b400e376946.png)<br />
 
 ![image](https://user-images.githubusercontent.com/26542094/106123890-d7032780-619d-11eb-9156-cad32db65852.png)<br />
