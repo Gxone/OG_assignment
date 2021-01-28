@@ -25,12 +25,14 @@
 
 ![erd](https://user-images.githubusercontent.com/26542094/106050926-1ba1ab00-612b-11eb-9860-2258b3f4dfd5.png)
 
+<br />
+
 ## 적용 기술 및 구현 기능
 
 ### 적용 기술
 
 > - Front-End : Django 2.2 템플릿 엔진 기반
-> - Back-End : Django 2.2, My SQL
+> - Back-End : Django 2.2, MySQL
 > - Common : AWS(EC2,RDS), RESTful API
 
 <br />
@@ -39,6 +41,7 @@
 
 #### 설문조사 페이지
 
+- [x] 관리자 페이지에서 문항, 선택지 생성 시 적용 
 - [x] 모든 설문에 대한 응답과 전화 번호 입력 후 제출 가능
 - [ ] check box 선택 개수 제한
 
@@ -53,14 +56,16 @@
 - [x] 버튼을 통해 설문 결과 csv 파일로 다운
 
 #### 공통
-- [x] Aws Ec2, Rds 
+- [x] Aws Ec2, Rds, gunicorn
 - [ ] nginx (배포 시 static 파일 적용)
 
-![image](https://user-images.githubusercontent.com/26542094/106123698-9d322100-619d-11eb-9c66-2b400e376946.png)
 <br />
-![image](https://user-images.githubusercontent.com/26542094/106123890-d7032780-619d-11eb-9156-cad32db65852.png)
-<br />
-![image](https://user-images.githubusercontent.com/26542094/106123970-ebdfbb00-619d-11eb-946a-580418514d49.png)
-<br />
+![image](https://user-images.githubusercontent.com/26542094/106123698-9d322100-619d-11eb-9c66-2b400e376946.png)<br />
+
+![image](https://user-images.githubusercontent.com/26542094/106123890-d7032780-619d-11eb-9156-cad32db65852.png)<br />
+
+![image](https://user-images.githubusercontent.com/26542094/106123970-ebdfbb00-619d-11eb-946a-580418514d49.png)<br />
+
 ![image](https://user-images.githubusercontent.com/26542094/106123992-f13d0580-619d-11eb-9994-0bc6647fc18f.png)
+
 ![image](https://user-images.githubusercontent.com/26542094/106124051-02861200-619e-11eb-80bb-1babf4d1efee.png)
