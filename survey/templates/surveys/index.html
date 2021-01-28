@@ -45,11 +45,10 @@
                             <div class = "poll-content">
                                 <!-- 설문 문항 타이틀 -->
                                 <h4>{{survey.survey_title}}</h4>
-
                                 <!-- 문항 타입이 select 일 경우 선택지를 select로 -->
                                 {% if survey.survey_type == 'select' %}
                                     <div class ="col-md-4 input-content">
-                                        <select class = "form-select" id = "{{survey.survey_title}}" name = "{{survey.survey_title}}" >
+                                        <select id = "{{survey.survey_title}}" name = "{{survey.survey_title}}" class = "form-select">
                                             {% for question in survey.question_title %}
                                                 <option value = "{{question}}">{{question}}</option>
                                             {% endfor %}
@@ -59,31 +58,27 @@
                                 {% else %}
                                     {% for question in survey.question_title %}
                                         <div class = "input-content">
-                                            <input type = "{{survey.survey_type}}"  class = "form-check-input" name = "{{survey.survey_title}}" id = "{{question}}" value = "{{question}}" required>
+                                            <input type = "{{survey.survey_type}}" id = "{{question}}" name = "{{survey.survey_title}}" class = "form-check-input"  value = "{{question}}" required>
                                             <label for = "{{question}}">{{question}}</label><br>
                                         </div>
                                     {% endfor %}
                                 {% endif %}
                             </div>
                         {% endfor %}
-
                         <!-- 전화번호 입력 필드 -->
                         <div class="col-md-4">
-                            <label for = "tel" id = "number">전화 번호를 입력해주세요. </label>
-                            <input type = "tel" class="form-control" id = "tel" name = "user" pattern="[0-9]{11}" title = "숫자 11자를 입력해주세요." required>
+                            <label id = "number" for = "tel">전화 번호를 입력해주세요. </label>
+                            <input type = "tel" id = "tel"  name = "user" class="form-control"  pattern="[0-9]{11}" title = "숫자 11자를 입력해주세요." required>
                         </div><br>
-
-
                         <!-- 제출 버튼 -->
-                        <input type = "submit" class = "btn btn-outline-success" id = "submit" onsubmit="formSubmit">
+                        <input type = "submit" id = "submit" class = "btn btn-outline-success" onsubmit = "formSubmit">
                     </form>
                 </div>
-
             {% else %}
                 <p>설문 조사 문항이 없습니다.</p>
             {% endif %}
         </div>
-</div>
+    </div>
 </div>
 </body>
 </html>

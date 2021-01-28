@@ -15,14 +15,14 @@ class Question(models.Model):
         return self.question
 
 class SurveyType(models.Model):
-    name = models.CharField(max_length = 24)
+    name = models.CharField(max_length = 45)
 
     def __str__(self):
         return self.name
 
 class User(models.Model):
-    phone_number = models.CharField(max_length = 50)
-    question = models.ManyToManyField(Question, through = 'SurveyAnswer')
+    phone_number = models.CharField(max_length = 45)
+    question     = models.ManyToManyField(Question, through = 'SurveyAnswer')
 
     def __str__(self):
         return self.phone_number

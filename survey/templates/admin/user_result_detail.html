@@ -22,10 +22,10 @@
     <div class = "container">
         <h2 class = "title">"{{user_number}}" 의 응답 내용</h2> <hr><br>
         <h3 style = "color: #476D76;">전화번호 :</h3> {{user_number}} <br>
-        {% for i in answer_data %}
-        <h3 style = "color: #476D76;">{{i.title}} :</h3>
-                {% for j in i.answer_list %}
-                    {{j}}
+        {% for survey in answer_data %}
+        <h3 style = "color: #476D76;">{{survey.title}} :</h3>
+                {% for answer in survey.answer_list %}
+                    {{answer}}
                 {% endfor %}
             <br>
         {% endfor %}
