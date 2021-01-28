@@ -57,7 +57,7 @@
 
 #### 공통
 - [x] Aws Ec2, Rds, gunicorn
-- [ ] nginx (배포 시 static 파일 적용)
+- [x] nginx (배포 시 static 파일 적용)
 
 <br />
 
