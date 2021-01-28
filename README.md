@@ -46,7 +46,7 @@
 
 #### 관리자 페이지
 
-- [x] 설문 문항의 유형 select, radir, check box
+- [x] 설문 문항의 유형 select, radio, check box
 - [x] 관리자 페이지에서 설문 문항 추가, 수정, 삭제 가능
 - [x] 문항마다 선택지 별 응답 비율 확인 가능
 - [x] 응답자마다 응답한 내용 확인 가능
@@ -54,10 +54,13 @@
 
 #### 공통
 - [x] Aws Ec2, Rds 
-- [ ] nginx
+- [ ] nginx (배포 시 static 파일 적용)
 
 ![image](https://user-images.githubusercontent.com/26542094/106123698-9d322100-619d-11eb-9c66-2b400e376946.png)
+<br />
 ![image](https://user-images.githubusercontent.com/26542094/106123890-d7032780-619d-11eb-9156-cad32db65852.png)
+<br />
 ![image](https://user-images.githubusercontent.com/26542094/106123970-ebdfbb00-619d-11eb-946a-580418514d49.png)
+<br />
 ![image](https://user-images.githubusercontent.com/26542094/106123992-f13d0580-619d-11eb-9994-0bc6647fc18f.png)
 ![image](https://user-images.githubusercontent.com/26542094/106124051-02861200-619e-11eb-80bb-1babf4d1efee.png)
