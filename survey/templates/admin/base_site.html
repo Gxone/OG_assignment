@@ -3,6 +3,13 @@
 {% block title %}survey admin{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
 {% endblock %}
-{% block nav-global %}{% endblock %}
+
+{% block nav-global %}
+<div>
+    <a href = "/admin/results/" style = "margin-right:20px;">문항 별 설문조사 결과</a>
+    <a href = "/admin/user-results/">응답자 별 설문조사 결과</a>
+</div>
+{% endblock %}
+

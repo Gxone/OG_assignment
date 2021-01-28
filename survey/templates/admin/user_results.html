@@ -32,14 +32,12 @@
         <!-- 유저 리스트가 존재하는 경우 -->
         <ul class = "list-group">
             {% for i in user_list %}
-
                 <li class = "list-group-item">
-                    <span class = "badge badge-pill badge-info" style = "margin-right: 5px">{{forloop.counter}}</span>
+                    <b style = "margin-right: 5px">{{forloop.counter}}</b>
                     <a href = "{{i.user_id}}/">{{i.user_number}}</a>
                 </li>
             {% endfor %}
         </ul>
-
     </div>
 {% endblock content%}
 </div>

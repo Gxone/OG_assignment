@@ -35,11 +35,10 @@
             <h3 style = "color: #476D76;">{{i.survey_data.title}}</h3>
             {% for j in i.survey_data.answer_rate %}
                 {{j.answer}} -
-                {{j.rate}}<br>
+                <b>{{j.rate}}</b><br>
             {% endfor %}<br>
         {% endfor %}<br>
     </div>
-
 {% endblock content%}
 </body>
 </html>
